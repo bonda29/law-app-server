@@ -7,9 +7,9 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      #MYSQL_DATABASE: test
-      #MYSQL_USER: bonda
-      #MYSQL_PASSWORD: bonda
+      MYSQL_DATABASE: law_app
+      MYSQL_USER: bonda
+      MYSQL_PASSWORD: bonda
     ports:
       - "3306:3306"
     volumes:
