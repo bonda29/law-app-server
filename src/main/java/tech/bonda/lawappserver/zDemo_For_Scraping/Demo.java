@@ -12,8 +12,8 @@ public class Demo {
 
     public static void main(String[] args) {
         //Scrapes books and quotes from https://toscrape.com/
-        getBooks(2);
-        getQuotes(3);
+        getBooks(50);
+       // getQuotes(3);
     }
 
     private static void getBooks(int numberOfPagesToScrape) {
@@ -29,7 +29,8 @@ public class Demo {
                 for (Element product : books)
                 {
                     String title = product.selectFirst("h3 a").attr("title");
-                    String imageUrl = "https://books.toscrape.com" + product.selectFirst("div.image_container img").attr("src");
+                    String imageUrl = "https://books.toscrape.com" + product.selectFirst("div.image_container img").attr("src").replace("../","/");
+                    System.out.println("IMAGEURL" + imageUrl);
                     String price = product.selectFirst("p.price_color").text();
                     String availability = product.selectFirst("p.availability").text();
                     if (availability.equals("In stock"))
