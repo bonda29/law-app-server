@@ -4,9 +4,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tech.bonda.lawappserver.AuthService.AuthService;
 import tech.bonda.lawappserver.payload.request.LoginPayload;
 import tech.bonda.lawappserver.payload.request.RegisterPayload;
+import tech.bonda.lawappserver.security.services.AuthService;
 
 
 @RequiredArgsConstructor

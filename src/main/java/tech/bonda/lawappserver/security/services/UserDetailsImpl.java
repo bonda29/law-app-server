@@ -11,19 +11,14 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-@SuppressWarnings({"FieldMayBeFinal", "MissingSerialAnnotation", "LombokGetterMayBeUsed"})
+@SuppressWarnings({"FieldMayBeFinal", "LombokGetterMayBeUsed"})
 public class UserDetailsImpl implements UserDetails {
-    private static final long serialVersionUID = 1L;
 
     private Long id;
-
     private String username;
-
     private String email;
-
     @JsonIgnore
     private String password;
-
     private Collection<? extends GrantedAuthority> authorities;
 
     public UserDetailsImpl(Long id, String username, String email, String password,
@@ -93,15 +88,6 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public boolean equals(Object o) {
-      if (this == o)
-      {
-        return true;
-      }
-      if (o == null || getClass() != o.getClass())
-      {
-        return false;
-      }
-        UserDetailsImpl user = (UserDetailsImpl) o;
-        return Objects.equals(id, user.id);
+        return this == o || (o != null && getClass() == o.getClass() && Objects.equals(id, ((UserDetailsImpl) o).id));
     }
 }

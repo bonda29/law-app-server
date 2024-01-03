@@ -1,4 +1,4 @@
-package tech.bonda.lawappserver.AuthService;
+package tech.bonda.lawappserver.security.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +20,7 @@ import tech.bonda.lawappserver.payload.response.MessageResponse;
 import tech.bonda.lawappserver.repository.RoleRepository;
 import tech.bonda.lawappserver.repository.UserRepository;
 import tech.bonda.lawappserver.security.jwt.JwtUtils;
-import tech.bonda.lawappserver.security.services.UserDetailsImpl;
+
 
 import java.util.HashSet;
 import java.util.List;
@@ -43,51 +43,20 @@ public class AuthService {
     private final JwtUtils jwtUtils;
 
     public ResponseEntity<?> registerUser(RegisterPayload data) {
-        if (userRepository.existsByUsername(data.getUsername())) {
+        if (userRepository.existsByUsername(data.getUsername()))
+        {
             return ResponseEntity.badRequest().body(new MessageResponse("Username is already taken!"));
         }
-
+        if (userRepository.existsByEmail(data.getEmail()))
+        {
+            return ResponseEntity.badRequest().body(new MessageResponse("Email is already in use!"));
+        }
 
         User user = User.builder()
                 .username(data.getUsername())
+                .email(data.getEmail())
                 .password(encoder.encode(data.getPassword()))
                 .build();
-
-/*
-        Set<String> strRoles = data.getRole();
-        Set<Role> roles = new HashSet<>();
-
-        if (strRoles == null)
-        {
-            Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-            roles.add(userRole);
-        }
-        else
-        {
-            strRoles.forEach(role -> {
-                switch (role)
-                {
-                    case "admin":
-                        Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                        roles.add(adminRole);
-
-                        break;
-                    case "mod":
-                        Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                        roles.add(modRole);
-
-                        break;
-                    default:
-                        Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                        roles.add(userRole);
-                }
-            });
-        }
-*/
 
         Set<Role> roles = new HashSet<>();
         Role userRole = roleRepository.findByName(ERole.ROLE_USER)

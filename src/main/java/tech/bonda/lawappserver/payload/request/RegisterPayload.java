@@ -9,10 +9,13 @@ import java.util.Set;
 
 @Value
 public class RegisterPayload implements Serializable {
-    String username;
+	String username;
 
+	@Email
+	String email;
 
-    Set<String> role;
-    String password;
-    List<String> imageUrls;
+	Set<String> role;
+	String password;
+	List<String> imageUrls;
 }
+
